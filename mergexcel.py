@@ -16,8 +16,10 @@ def progress_bar(current, total, message):
     bar_length = 20
     filled_length = int(round(bar_length * current / total))
     bar = '█' * filled_length + '-' * (bar_length - filled_length)
-    sys.stdout.write(f'\r|{bar}| {message}\033[K')
-    sys.stdout.flush()
+
+    sys.stderr.write(f'\r\033[K|{bar}| {message}')
+    sys.stderr.flush()
+
 
 # Main function
 def merge_excel():
@@ -34,7 +36,8 @@ def merge_excel():
         print("❌ Invalid number for codebooks.")
         return
 
-    output_file = input(f"Where should the combined file be saved [{folder}/combined_excel.xlsx]? ") or os.path.join(folder, 'combined_excel.xlsx')
+    default_output = os.path.join(os.getcwd(), 'combined_excel.xlsx')
+    output_file = input(f"Where should the combined file be saved [./combined_excel.xlsx]? ") or default_output
 
     print()
 
