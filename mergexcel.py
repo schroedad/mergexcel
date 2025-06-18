@@ -17,8 +17,11 @@ def progress_bar(current, total, message):
     filled_length = int(round(bar_length * current / total))
     bar = '█' * filled_length + '-' * (bar_length - filled_length)
 
-    # Clear the entire line and reset cursor to start
-    print(f'\r\033[K|{bar}| {message}', end='', flush=True)
+    # Carriage return to line start, clear line, then print.
+    sys.stdout.write('\r')         # Move cursor to start of line
+    sys.stdout.write('\033[K')     # Clear to end of line
+    sys.stdout.write(f'|{bar}| {message}')
+    sys.stdout.flush()
 
 # Main function
 def merge_excel():
