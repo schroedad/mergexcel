@@ -1,17 +1,19 @@
+# AI Prompt
+
 Create a python script that will combine all Excel files in a specified folder into a single file as follows:
 
-Assumptions:
+## Assumptions
 1. All excel files (with suffix .xlsx) in the folder specified will be included.
 2. The first file processed dictates the number and name of all the worksheets (up to 100).  Subsequent files typically have the same number of worksheets and names, but if any worksheets are missing (by name comparison), skip those worksheets but process the rest of the worksheets in the file. If there are extra worksheets in subsequent files that do not match the name of the first one processed, skip them as well.  Except, if no worksheets match, or if only the codebook worksheets match, then stop with an error.
 3. The first n number of worksheets may or may not be static codebooks. If there are > 0 codebooks, all Excel files will have the codebooks but we should only include the codebooks from the first excel file processed. 
 
-General Approach
+## General Approach
 1. First, ask the user a couple of questions on the command line. The first question will be "Specify the folder containing excel files [] :"  where the current folder is listed as the default. Support relative paths like ~/files. The second will ask "How many codebook worksheets are there [1]?" The default is 1 for this question, but 0 or other positive integers are valid responses. Ensure an integer response. 0 means there are no codebooks.
 2. Create a list of all Excel files in the specified folder for looping
 3. Open the first file in the list and use its contents to create a new Excel file that will be the combined Excel file. If the user specified that there are codebooks, copy the entire first worksheet as the codebook from this first file into the garget combined version (including the name of the worksheet). Then, copy everything from subsequent worksheets, including the name of each worksheet and the header row of each into subsequent worksheets on the target combined Excel file.
 4. Iterate through the rest of the files. For each, if the user said the files contain a codebook, skip the first worksheet. Otherwise don't skip it. Then copy rows 2 - n from each worksheet into the corresponding worksheet of our target combined file. We start on row 2 because we only need one copy of the header row in our target file.
 
-More details
+## More details
 1. Call the python command mergexcel
 2. Use the openpyxl library
 3. Try to limit use of libraries beyond openpyxl
